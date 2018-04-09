@@ -65,10 +65,10 @@ export default class HistoryTable extends React.Component {
                 {
                   id: 'downloadKey',
                   filterable: false,
-                  accessor: 'downloadKey',
+                  accessor: (d) => d.children.length === 0? null : d.downloadKey,
                   maxWidth: 40,
                   Cell : (row) => <div style={styles.actionColumn}>
-                    <i style={styles.download} className="fa fa-download" onClick={this.handleDownloadFile(row.value)}></i>
+                    {row.value? <i style={styles.download} className="fa fa-download" onClick={this.handleDownloadFile(row.value)}></i> : <i className="fa fa-cog fa-spin fa-fw"></i>}                    
                   </div>
                 },
                 {
@@ -103,12 +103,14 @@ export default class HistoryTable extends React.Component {
           className="-striped -highlight"
           SubComponent={row => {
             const data = row.original.children;
+            const noData = data.length === 0;
             const pageSize = 10;
             const actualPageSize = data.length < pageSize? data.length : pageSize;
             const showPagination= data.length > pageSize;
             return (
               <div style={{ padding: "20px", paddingLeft: '34px' }}>
-                <ReactTable
+                {
+                  noData ? <p>This upload is still be processing.</p>: <ReactTable
                   filterable
                   data={row.original.children}
                   columns={[
@@ -137,6 +139,8 @@ export default class HistoryTable extends React.Component {
                   defaultPageSize={actualPageSize}
                   showPagination={showPagination}
                 />
+                }
+                
               </div>
 
             );
