@@ -1,0 +1,5 @@
+frontend-react/node_modules/
+nodejs/node_modules/
+nodejs/uploads/
+nodejs/uploadTmp/
+nodejs/logs/

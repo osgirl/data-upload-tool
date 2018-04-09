@@ -1,0 +1,25 @@
+{
+  "name": "data-pump",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.0",
+    "body-parser": "^1.18.2",
+    "command-exists": "^1.2.2",
+    "connect-multiparty": "^2.1.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "glob": "^7.1.2",
+    "nedb": "^1.8.0",
+    "strip-ansi": "^4.0.0",
+    "underscore": "^1.8.3",
+    "uuid": "^3.2.1",
+    "winston": "3.0.0-rc1"
+  }
+}
