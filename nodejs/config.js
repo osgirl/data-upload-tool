@@ -41,4 +41,5 @@ module.exports = {
 	LOG_FILE: path.dirname(require.main.filename) + '/logs/log.log',
   LOG_FOLDER: path.dirname(require.main.filename) + '/logs/',
   CORS_ALLOW : '*',
+  PORT: 3200
 };

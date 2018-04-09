@@ -62,7 +62,6 @@ class DataPumpUtils {
     const containingFolder = getParentFolderForFile(filename)
     const actualName = getFilenameFromFilepath(filename);
 
-    logger.silly(`Containing folder ${containingFolder} actualName ${actualName}`)
     DataPumpAPI.createHistoryRecord(Object.assign({}, context, { status: 'PROCESSING_UNZIP' }));
 
     const setStatusCompleteForPipelineCallback = () => {
@@ -77,7 +76,7 @@ class DataPumpUtils {
     
     commandExists('jar', function(err, commandExists){
       if (!commandExists){
-        logger.warn('Jar command does not exist on this system, skipping unzip')
+        logger.warn('jar command does not exist on this system, skipping unzip')
         logger.warn('Zip files will not be extracted until the JDK is installed.')
         logger.warn('Please install the JDK')
         generateRecordsCallback();
@@ -88,21 +87,18 @@ class DataPumpUtils {
     })
   }
 
-
-
-
   static generateRecordsForGeneratedFiles(containingFolder, context, callback) {
-    glob(containingFolder + '/*.*', (err, files) => {
+    glob(containingFolder + '/**/*.*', (err, files) => {
       async.eachSeries(files, (file, cb) => {
-        logger.debug(`Generating DB record for ` + file);
-        edl.creadEDLHistoryRecordForGeneratedFile({
+        logger.database(`Generating DB record for ` + file);
+
+        DataPumpAPI.addChildFile({
+          identifier: context.identifier,
           filepath: file,
           fileSize: fs.statSync(file).size,
           filename: getFilenameFromFilepath(file),
-          parentId: context.identifier,
-          userId: context.userId,
-          ownername: context.ownername,
         })
+
         cb()
       }, callback)
 
@@ -124,7 +120,9 @@ class DataPumpUtils {
         DataPumpUtils.writeUnzip(outputFilepath, context)
       }
       else {
-        DataPumpAPI.createHistoryRecord(Object.assign({}, context, { status: 'COMPLETED' }));
+        DataPumpUtils.generateRecordsForGeneratedFiles(outputFolder, context, () => {
+          DataPumpAPI.createHistoryRecord(Object.assign({}, context, { status: 'COMPLETED' }));
+        })
       }
     });
 

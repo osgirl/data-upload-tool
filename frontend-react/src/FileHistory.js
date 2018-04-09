@@ -25,28 +25,51 @@ export default class HistoryTable extends React.Component {
   //   identifier,
   //   statuses
   // } = file;
-  handleDownloadFile = (identifier) => {
+  state = {
+    files : []
+  }
+  
+  shouldComponentUpdate(){
+    const fileStr = JSON.stringify(this.props.files);
+    const stateStr = JSON.stringify(this.state.files);
+    return (fileStr !== stateStr)
+  }
+
+
+  componentDidUpdate(){
+    const fileStr = JSON.stringify(this.props.files);
+    const stateStr = JSON.stringify(this.state.files);
+    if (fileStr !== stateStr){
+      this.setState({ files: JSON.parse(fileStr) })
+    }
+  }
+
+  handleDownloadFile = (downloadKey) => {
     return (e) => {
+      const {download} = this.props;
       e.preventDefault();
-      console.log(identifier);
+      if (download) download(downloadKey);
     }
   }
 
   render() {
-    
+    const {files} = this.state;
     return (
       <div>
         <ReactTable
-          data={this.props.files}
+          data={files}
           columns={[
             {
               Header: 'Upload History',
               columns: [
                 {
-                  id: 'identifier',
-                  accessor: 'identifier',
-                  maxWidth: 100,
-                  Cell : (row) => <div style={styles.actionColumn}><i style={styles.download} className="fa fa-download" onClick={this.handleDownloadFile(row.value)}></i></div>
+                  id: 'downloadKey',
+                  filterable: false,
+                  accessor: 'downloadKey',
+                  maxWidth: 40,
+                  Cell : (row) => <div style={styles.actionColumn}>
+                    <i style={styles.download} className="fa fa-download" onClick={this.handleDownloadFile(row.value)}></i>
+                  </div>
                 },
                 {
                   Header: "Name",
@@ -56,7 +79,14 @@ export default class HistoryTable extends React.Component {
                 {
                   Header: "Size",
                   id : 'fileSize',
-                  accessor: (d) => filesize(d.fileSize)
+                  Cell : (row) => <div>{filesize(row.value)}</div>,
+                  accessor: (d) => d.fileSize,
+                },
+                {
+                  Header: "Files",
+                  id : 'files',
+                  // Cell : (row) => <div>{filesize(row.value)}</div>,
+                  accessor: (d) => d.children.length - 2,
                 },
                 {
                   Header: 'Created',
@@ -67,9 +97,50 @@ export default class HistoryTable extends React.Component {
             },
           
           ]}
-          defaultPageSize={10}
-          showPagination={false}
+          defaultPageSize={6}
+          filterable
+          showPagination={true}
           className="-striped -highlight"
+          SubComponent={row => {
+            const data = row.original.children;
+            const pageSize = 10;
+            const actualPageSize = data.length < pageSize? data.length : pageSize;
+            const showPagination= data.length > pageSize;
+            return (
+              <div style={{ padding: "20px", paddingLeft: '34px' }}>
+                <ReactTable
+                  filterable
+                  data={row.original.children}
+                  columns={[
+                    {
+                      id: 'downloadKey',
+                      filterable: false,
+                      accessor: 'downloadKey',
+                      maxWidth: 40,
+                      Cell : (row) => <div style={styles.actionColumn}>
+                        <i style={styles.download} className="fa fa-download" onClick={this.handleDownloadFile(row.value)}></i>
+                      </div>
+                    },
+                    {
+                      Header: "Name",
+                      accessor: "filename",
+                      id: 'filename'
+                    },
+                    {
+                      Header: "Size",
+                      id : 'fileSize',
+                      Cell : (row) => <div>{filesize(row.value)}</div>,
+                      accessor: (d) => d.fileSize,
+                    },
+                    {filterable: false,},{filterable: false,},
+                  ]}
+                  defaultPageSize={actualPageSize}
+                  showPagination={showPagination}
+                />
+              </div>
+
+            );
+          }}
         />
         <br />
       </div>

@@ -5,6 +5,7 @@ const resumable = require('./resumable.js')();
 const DataPumpUtils = require('./utils.js');
 const DataPumpAPI = require('./api.js');
 const _ = require('underscore');
+const constants = ('../config.js');
 
 
 class DataPumpHttp {
@@ -79,7 +80,7 @@ class DataPumpHttp {
         res.status((status == 'found' ? 200 : 404)).send(status);
       }
     });
-  }
+}
 
   static postNewUploadRecord(req, res) {
     // logger.info(`Owner name is ${ownername}`)
@@ -116,6 +117,20 @@ class DataPumpHttp {
 
   static getDownloadByIdentifier(req, res) {
     resumable.write(req.params.identifier, res);
+  }
+
+  static getDownloadByDownloadKey(req, res){
+    const { downloadKey } = req.params;
+    const split = downloadKey.split('|');
+    if (split.length !== 2) res.sendStatus(500);
+
+    const identifier = split[0];
+    const filename = split[1];
+
+    DataPumpAPI.getFilepathByIdentifierAndFilename(identifier, filename, (file) => {
+      if (!file) res.sendStatus(500);
+      else res.download(file.filepath); // Set disposition and send it.
+    })
   }
 
   static postUploadHistory(req, res){

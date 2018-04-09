@@ -3,3 +3,4 @@ nodejs/node_modules/
 nodejs/uploads/
 nodejs/uploadTmp/
 nodejs/logs/
+nodejs/*.db

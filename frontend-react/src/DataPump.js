@@ -7,8 +7,8 @@ import constants from './config';
 import FileHistory from './FileHistory';
 import UploadQueue from './UploadQueue';
 
-const HISTORY_POLL_TIME_MS = 5000;
-const PROGRESS_POLL_TIME = 800;
+const HISTORY_POLL_TIME_MS = 2500;
+const PROGRESS_POLL_TIME = 500;
 axios.defaults.baseURL = constants.API_URL;
 const uploadEndpoint = `${constants.API_URL}/api/upload`;
 const simultaneousUploads = 3;
@@ -154,7 +154,7 @@ export default class DataPump extends React.Component {
             {/* <div style={styles.dropbox} onClick={() => dropzoneRef.open() }>Drag files to this window to begin uploading or <span style={styles.underline}>choose files.</span></div> */}
               { dropzoneActive && <div style={styles.overlayStyle}>Drop files...</div> }
               <div><UploadQueue resumable={this.resumable} files={files}/></div>
-              <div><FileHistory files={historyFiles}/></div>
+              <div><FileHistory download={DataPumpAPI.getDownloadByDownloadKey} files={historyFiles}/></div>
           </div>
         </Dropzone>
         
@@ -178,8 +178,8 @@ class DataPumpAPI {
 
   }
 
-  static getDownloadByIdentifier(){
-
+  static getDownloadByDownloadKey(downloadKey){
+    window.open(`${constants.API_URL}/api/download/${downloadKey}`);
   }
 
   static postUploadHistory(data, callback){
