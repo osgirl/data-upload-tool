@@ -28,7 +28,7 @@ const ensureAuthenticated = function (req, res, next) {
   next();
 }
 
-// app.use(express.static(__dirname + '/build'));
+app.use('/static',express.static(__dirname + '/build'));
 
 
 
