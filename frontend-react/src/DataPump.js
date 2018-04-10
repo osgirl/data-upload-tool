@@ -9,8 +9,9 @@ import UploadQueue from './UploadQueue';
 
 const HISTORY_POLL_TIME_MS = 2500;
 const PROGRESS_POLL_TIME = 500;
-axios.defaults.baseURL = constants.API_URL;
-const uploadEndpoint = `${constants.API_URL}/api/upload`;
+// axios.defaults.baseURL = constants.API_URL;
+// const uploadEndpoint = `${constants.API_URL}/api/upload`;
+const uploadEndpoint = `/api/upload`;
 const simultaneousUploads = 3;
 
 export default class DataPump extends React.Component {
@@ -179,8 +180,8 @@ class DataPumpAPI {
   }
 
   static getDownloadByDownloadKey(downloadKey){
-    window.open(`${constants.API_URL}/api/download/${downloadKey}`);
-    // window.open(`${window.location.origin}/api/download/${downloadKey}`);
+    if (process.env.NODE_ENV === 'development') window.open(`${constants.API_URL}/api/download/${downloadKey}`);
+    else window.open(`${window.location.origin}/api/download/${downloadKey}`);
   }
 
   static postUploadHistory(data, callback){
