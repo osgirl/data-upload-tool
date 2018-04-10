@@ -12,7 +12,8 @@ const PROGRESS_POLL_TIME = 500;
 // axios.defaults.baseURL = constants.API_URL;
 // const uploadEndpoint = `${constants.API_URL}/api/upload`;
 const uploadEndpoint = `/api/upload`;
-const simultaneousUploads = 3;
+const simultaneousUploads = constants.SIMULTANEOUS_UPLOADS;
+const chunkSize = constants.CHUNK_SIZE;
 
 export default class DataPump extends React.Component {
 
@@ -65,7 +66,7 @@ export default class DataPump extends React.Component {
     this.resumable = new Resumable({
       target: uploadEndpoint,
       simultaneousUploads,
-      chunkSize: 1 * 1024 * 1024,
+      chunkSize,
       // headers: { Authorization: Auth.getToken() },
       generateUniqueIdentifier: function (file, event) {
         var relativePath = file.webkitRelativePath || file.fileName || file.name; // Some confusion in different versions of Firefox
@@ -142,7 +143,9 @@ export default class DataPump extends React.Component {
   render() {
     const {historyFiles, files, dropzoneActive} = this.state;
     let dropzoneRef;
+    const isMobile = window.innerWidth < 800;
 
+    console.log(isMobile)
     return <div>
         <Dropzone disableClick
           ref={(node) => { dropzoneRef = node; }}
@@ -152,7 +155,7 @@ export default class DataPump extends React.Component {
           style={styles.dropzone}
           >
           <div>
-            {/* <div style={styles.dropbox} onClick={() => dropzoneRef.open() }>Drag files to this window to begin uploading or <span style={styles.underline}>choose files.</span></div> */}
+              { isMobile && <button onClick={() => dropzoneRef.open()}>New Upload</button> }
               { dropzoneActive && <div style={styles.overlayStyle}>Drop files...</div> }
               <div><UploadQueue resumable={this.resumable} files={files}/></div>
               <div><FileHistory download={DataPumpAPI.getDownloadByDownloadKey} files={historyFiles}/></div>

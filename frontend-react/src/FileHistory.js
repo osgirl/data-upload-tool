@@ -32,14 +32,13 @@ export default class HistoryTable extends React.Component {
   shouldComponentUpdate(){
     const fileStr = JSON.stringify(this.props.files);
     const stateStr = JSON.stringify(this.state.files);
-    return (fileStr !== stateStr)
+    return (fileStr !== stateStr || this.state.files === 0)
   }
-
 
   componentDidUpdate(){
     const fileStr = JSON.stringify(this.props.files);
     const stateStr = JSON.stringify(this.state.files);
-    if (fileStr !== stateStr){
+    if (fileStr !== stateStr || this.state.files === 0){
       this.setState({ files: JSON.parse(fileStr) })
     }
   }
@@ -83,10 +82,18 @@ export default class HistoryTable extends React.Component {
                   accessor: (d) => d.fileSize,
                 },
                 {
+                  Header: 'Type',
+                  id: 'filetype',
+                  accessor: (d) => {
+                    const splits = d.filename.split('.');
+                    return splits[splits.length - 1].toUpperCase()
+                  }
+                },
+                {
                   Header: "Files",
                   id : 'files',
-                  // Cell : (row) => <div>{filesize(row.value)}</div>,
-                  accessor: (d) => d.children.length - 2,
+                  Cell : (row) => <div>{row.value <= 0 ? <i className="fa fa-spinner fa-spin fa-fw"></i> : row.value}</div>,
+                  accessor: (d) => (d.children.length - 2),
                 },
                 {
                   Header: 'Created',
@@ -110,7 +117,7 @@ export default class HistoryTable extends React.Component {
             return (
               <div style={{ padding: "20px", paddingLeft: '34px' }}>
                 {
-                  noData ? <p>This upload is still be processing.</p>: <ReactTable
+                  noData ? <p>This upload is still processing.</p>: <ReactTable
                   filterable
                   data={row.original.children}
                   columns={[
