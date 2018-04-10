@@ -180,6 +180,7 @@ class DataPumpAPI {
 
   static getDownloadByDownloadKey(downloadKey){
     window.open(`${constants.API_URL}/api/download/${downloadKey}`);
+    // window.open(`${window.location.origin}/api/download/${downloadKey}`);
   }
 
   static postUploadHistory(data, callback){

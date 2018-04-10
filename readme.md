@@ -11,15 +11,22 @@ This project serves as a boilerplate for integrating resumable file uploads into
 
 ## Project structure
 
-This repository contains two projects: a nodejs backend, and a React front-end. The nodejs project already has the pre-built front-end assets.
+This repository contains two projects: a nodejs backend, and a React front-end.
 
-## Running the Nodejs Project
+### Running the Nodejs Project
 
 * `cd nodejs`
 * `yarn`
 * `node server.js`
+* Navigate to `http://localhost:3200/ping` and you should see a response. 
 
-Navigate to `http://localhost:3200/` and you should see the project being served. 
+### Running the React Project
+
+* `cd frontend-react`
+* `yarn`
+* `yarn run start`
+
+Navigate to `http://localhost:3000/` and you should see the project being served. 
 
 ## How it Works
 

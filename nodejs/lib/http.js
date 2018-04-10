@@ -120,13 +120,14 @@ class DataPumpHttp {
   }
 
   static getDownloadByDownloadKey(req, res){
+    
     const { downloadKey } = req.params;
     const split = downloadKey.split('|');
     if (split.length !== 2) res.sendStatus(500);
 
     const identifier = split[0];
     const filename = split[1];
-
+    console.log('getting', identifier, filename)
     DataPumpAPI.getFilepathByIdentifierAndFilename(identifier, filename, (file) => {
       if (!file) res.sendStatus(500);
       else res.download(file.filepath); // Set disposition and send it.

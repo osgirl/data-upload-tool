@@ -1,5 +1,6 @@
 const express = require('express');
 const http = require('http');
+const path = require('path');
 const cors = require('cors')
 const DataPumpHttp = require('./lib/http.js');
 const logger = require('./lib/logger.js');
@@ -27,6 +28,10 @@ const ensureAuthenticated = function (req, res, next) {
   next();
 }
 
+// app.use(express.static(__dirname + '/build'));
+
+
+
 app.post('/api/upload', ensureAuthenticated, DataPumpHttp.postUploadChunk);
 app.get('/api/upload', ensureAuthenticated, DataPumpHttp.getUploadChunk);
 app.post('/api/new', ensureAuthenticated, DataPumpHttp.postNewUploadRecord)
@@ -35,9 +40,9 @@ app.get('/api/log/:id', ensureAuthenticated, DataPumpHttp.getLogByIdentifier)
 app.get('/api/download/:downloadKey', ensureAuthenticated, DataPumpHttp.getDownloadByDownloadKey);
 app.post('/api/history', ensureAuthenticated, DataPumpHttp.postUploadHistory)
 // app.get('/api/delete/:identifier', ensureAuthenticated, DataPumpAPI.deleteFile);
+app.get('/ping', (req, res) => res.send('Pong'))
 
-
-http.createServer(app).listen(port);
+app.listen(port);
 
 logger.boot('Running server on port ' + port);
 
