@@ -3,6 +3,7 @@ const _ = require('underscore');
 const uuidv4 = require('uuid/v4');
 const logger = require('./logger');
 const fs = require('fs');
+const fsExtra = require('fs.extra');
 const path = require('path');
 const constants = require('../config');
 const temporaryFolder = constants.TEMP_DIRECTORY;
@@ -165,8 +166,8 @@ module.exports = resumable = function () {
 		const mainDir = path.dirname(require.main.filename)
 		const uploadPath = relocation? path.join(mainDir, relocation)  : uploadFolder;
 		const outputFolder = path.join(uploadPath, identifier);
-		const outputFilepath = path.join(outputFolder, filename);
-
+    const outputFilepath = path.join(outputFolder, filename);
+    
 		const context = {
 			identifier,
 			numberOfChunks,
@@ -197,10 +198,8 @@ module.exports = resumable = function () {
 		var validation = validateRequest(chunkNumber, chunkSize, totalSize, identifier, files[FILE_PARAMETER_NAME].size);
 		if (validation == 'valid') {
 			var chunkFilename = getChunkFilename(chunkNumber, identifier);
-
 			// Save the chunk (TODO: OVERWRITE)
-			fs.rename(files[FILE_PARAMETER_NAME].path, chunkFilename, function () {
-
+      fsExtra.copy(files[FILE_PARAMETER_NAME].path, chunkFilename, { replace: false }, function (err) {
 				// Do we have all the chunks?
 				var currentTestChunk = 1;
 				var testChunkExists = function () {

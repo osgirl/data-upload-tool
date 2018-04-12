@@ -35,9 +35,9 @@ module.exports = {
 			debug: 'red'
 		},
 	},
-	UPLOAD_DIRECTORY: path.dirname(require.main.filename) + '/uploads/',
-  TEMP_DIRECTORY: path.dirname(require.main.filename) + '/uploadTmp/',
-  STAGING_DIRECTORY: path.dirname(require.main.filename) + '/uploadStaging/',
+	UPLOAD_DIRECTORY: path.join(path.dirname(require.main.filename) , '/uploads/'),
+  TEMP_DIRECTORY: path.join(path.dirname(require.main.filename) , '/uploadTmp/'),
+  STAGING_DIRECTORY: path.join(path.dirname(require.main.filename) , '/uploadStaging/'),
 	LOG_FILE: path.dirname(require.main.filename) + '/logs/log.log',
   LOG_FOLDER: path.dirname(require.main.filename) + '/logs/',
   CORS_ALLOW : '*',

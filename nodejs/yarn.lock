@@ -252,6 +252,10 @@ finalhandler@1.1.1:
     statuses "~1.4.0"
     unpipe "~1.0.0"
 
+foreachasync@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/foreachasync/-/foreachasync-3.0.0.tgz#5502987dc8714be3392097f32e0071c9dee07cf6"
+
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
@@ -259,6 +263,23 @@ forwarded@~0.1.2:
 fresh@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
+
+fs-extra@~0.6.1:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-0.6.4.tgz#f46f0c75b7841f8d200b3348cd4d691d5a099d15"
+  dependencies:
+    jsonfile "~1.0.1"
+    mkdirp "0.3.x"
+    ncp "~0.4.2"
+    rimraf "~2.2.0"
+
+fs.extra@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/fs.extra/-/fs.extra-1.3.2.tgz#dd023f93013bee24531f1b33514c37b20fd93349"
+  dependencies:
+    fs-extra "~0.6.1"
+    mkdirp "~0.3.5"
+    walk "^2.3.9"
 
 fs.realpath@^1.0.0:
   version "1.0.0"
@@ -319,6 +340,10 @@ ipaddr.js@1.6.0:
 isstream@0.1.x:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
+
+jsonfile@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-1.0.1.tgz#ea5efe40b83690b98667614a7392fc60e842c0dd"
 
 kuler@0.0.x:
   version "0.0.0"
@@ -385,6 +410,10 @@ minimist@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
+mkdirp@0.3.x, mkdirp@~0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.3.5.tgz#de3e5f8961c88c787ee1368df849ac4413eca8d7"
+
 mkdirp@~0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
@@ -400,6 +429,10 @@ multiparty@~4.1.3:
   resolved "https://registry.yarnpkg.com/multiparty/-/multiparty-4.1.3.tgz#3c43c7fcb1896e17460436a9dd0b6ef1668e4f94"
   dependencies:
     fd-slicer "~1.0.1"
+
+ncp@~0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/ncp/-/ncp-0.4.2.tgz#abcc6cbd3ec2ed2a729ff6e7c1fa8f01784a8574"
 
 nedb@^1.8.0:
   version "1.8.0"
@@ -474,6 +507,10 @@ raw-body@2.3.2:
     http-errors "1.6.2"
     iconv-lite "0.4.19"
     unpipe "1.0.0"
+
+rimraf@~2.2.0:
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
 
 safe-buffer@5.1.1:
   version "5.1.1"
@@ -570,6 +607,12 @@ uuid@^3.2.1:
 vary@^1, vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
+
+walk@^2.3.9:
+  version "2.3.13"
+  resolved "https://registry.yarnpkg.com/walk/-/walk-2.3.13.tgz#400852ade80df679f54637e4f08654ed6628f6da"
+  dependencies:
+    foreachasync "^3.0.0"
 
 winston-transport@^3.0.1:
   version "3.0.1"

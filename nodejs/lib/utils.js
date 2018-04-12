@@ -114,7 +114,7 @@ class DataPumpUtils {
     //stitches the file chunks back together to create the original file. 
     // stream.on('data', function (data) { });
     DataPumpAPI.createHistoryRecord(Object.assign({}, context, { status: 'ASSEMBLING_CHUNKS' }));
-
+    
     stream.on('close', function () {
       if (isZip) {
         DataPumpUtils.writeUnzip(outputFilepath, context)
