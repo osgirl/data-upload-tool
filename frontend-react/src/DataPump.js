@@ -144,8 +144,6 @@ export default class DataPump extends React.Component {
     const {historyFiles, files, dropzoneActive} = this.state;
     let dropzoneRef;
     const isMobile = window.innerWidth < 800;
-
-    console.log(isMobile)
     return <div>
         <Dropzone disableClick
           ref={(node) => { dropzoneRef = node; }}

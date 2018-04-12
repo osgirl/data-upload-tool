@@ -15,6 +15,8 @@ const uploadFolder = constants.UPLOAD_DIRECTORY;
 
 const fileManifestDb = new Datastore({ filename: './files.db', autoload: true });
 
+fileManifestDb.ensureIndex({ fieldName: 'identifier', unique: true }, function (err) {});
+
 const getParentFolderForFile = (filepath) => {
   const splits = filepath.split('/')
   splits.pop()
