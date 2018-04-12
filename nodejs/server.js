@@ -1,7 +1,5 @@
 const express = require('express');
 const http = require('http');
-const cluster = require('cluster');
-const numCPUs = require('os').cpus().length;
 const path = require('path');
 const cors = require('cors')
 const DataPumpHttp = require('./lib/http.js');
@@ -41,24 +39,7 @@ const initServer = () => {
   app.listen(port);
 }
 
-if (cluster.isMaster) {
-  logger.boot(`Master ${process.pid} is running`);
-  // Fork workers.
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
-
-  cluster.on('exit', (worker, code, signal) => {
-    logger.boot(`worker ${worker.process.pid} died`);
-  });
-} else {
-  initServer();
-  logger.boot(`Worker ${process.pid} started`);
-}
-
-
-
-
+initServer();
 
 logger.boot('Running server on port ' + port);
 commandExists('jar', function(err, commandExists){
